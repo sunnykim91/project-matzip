@@ -81,6 +81,7 @@ export class MapComponent implements OnInit  {
       });
     }
 
+
     console.log('hellod');
     }
       
