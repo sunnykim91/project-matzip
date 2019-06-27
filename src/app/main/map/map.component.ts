@@ -41,4 +41,6 @@ export class MapComponent implements OnInit  {
     new (window as any).daum.maps.Map(this.el.nativeElement.firstChild, options);
   }
 
+  
+
 }
