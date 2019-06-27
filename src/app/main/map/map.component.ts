@@ -5,6 +5,10 @@ import {
   import {HttpClient} from '@angular/common/http';
   import loadjs from 'loadjs';
 
+import { Matzips } from '../../matzips.interface'
+import { matzipList } from '../../matzip-data'
+
+
   declare var daum: any
 
 @Component({
@@ -20,6 +24,7 @@ import {
   `]
 })
 export class MapComponent implements OnInit  {
+  matzipList: Matzips[] = matzipList;
   container: any;
   daum: any
 
