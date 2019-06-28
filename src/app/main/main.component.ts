@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, Input,
+  Component, OnInit,
   ElementRef,
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -12,9 +12,9 @@ import { matzipList } from '../matzip-data'
 @Component({
   selector: 'app-main',
   template: `
-    <div id="map">{{container}}</div>
+    <div id="map"></div>
     <app-nav [navStatus]="navStatus" (changeOpacity)="highOpacity()"></app-nav>
-    <app-search></app-search>
+    <app-search (change)="changeArea($event)"></app-search>
   `,
   styles: [`
   #map {
@@ -25,11 +25,17 @@ import { matzipList } from '../matzip-data'
   `]
 })
 export class MainComponent implements OnInit {
-
-  matzipList: Matzips[] = matzipList;
-  container: any;
+  matzipList: Matzips[];
+  areaList: Matzips[];
+  broadcastList: Matzips[];
+  area = '';
+  broadcast = '';
   daum: any
   geocoder: any;
+  map: any;
+  imageSrc: any;
+
+  areaMarkers = [];
   navStatus: boolean = false;
 
   constructor(private http: HttpClient, private el: ElementRef) { }
@@ -38,28 +44,40 @@ export class MainComponent implements OnInit {
     loadjs('//dapi.kakao.com/v2/maps/sdk.js?appkey=06baf7c70082539cba96fe0b9ca385c9&libraries=services', this.handleMap)
   }
 
-  handleMap = () => {
+  changeArea(area: string){
+    this.area = area;
+    this.areaList = matzipList.filter(matzip => matzip.address.includes(this.area));
+    this.setMarker(this.map, this.imageSrc, this.areaList);
+  }
+
+   handleMap = () => {
     this.daum = window['daum']
     const options = {
       center: new (window as any).daum.maps.LatLng(33.450701, 126.570667),
       level: 3
     };
-    const map = new (window as any).daum.maps.Map(this.el.nativeElement.firstChild, options);
+    this.map = new (window as any).daum.maps.Map(this.el.nativeElement.firstChild, options);
 
-    var markerPosition = new (window as any).daum.maps.LatLng(33.450701, 126.570667);
+    let markerPosition = new (window as any).daum.maps.LatLng(33.450701, 126.570667);
 
     // 마커를 생성합니다
-    var marker = new (window as any).daum.maps.Marker({
+    let marker = new (window as any).daum.maps.Marker({
       position: markerPosition
     });
 
     // 마커가 지도 위에 표시되도록 설정합니다
-    marker.setMap(map);
-
+    marker.setMap(this.map);
 
     this.geocoder = new (window as any).daum.maps.services.Geocoder();
-    let imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    this.imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    this.areaList = matzipList.filter(matzip => matzip.address.includes(this.area));
+    this.setMarker(this.map, this.imageSrc, this.areaList);
+  }
 
+  setMarker(map, imageSrc, matzipList){     
+    for (var i = 0; i < this.areaMarkers.length; i++) {
+      this.areaMarkers[i].setMap(null);
+    }  
     for (let i = 0; i < matzipList.length; i++) {
 
       this.geocoder.addressSearch(matzipList[i].address, function (result, status) {
@@ -74,15 +92,20 @@ export class MainComponent implements OnInit {
 
           let markerImage = new (window as any).daum.maps.MarkerImage(imageSrc, imageSize);
 
-          new (window as any).daum.maps.Marker({
+          let marker = new (window as any).daum.maps.Marker({
             map: map,
             position: coords,
             title: matzipList[i].name,
             image: markerImage
           });
+          this.areaMarkers.push(marker);
+
         }
-      });
+        
+      }.bind(this));
+      
     }
+    
   }
 
   highOpacity() {
