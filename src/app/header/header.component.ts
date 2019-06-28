@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   <div class="header">
     <h1 class="logo">
       <a href="#">
-        <img src="../assets/img/logo.jpg" alt="맛있정로고">
+        <img src="../assets/img/logo1.png" alt="맛있정로고">
         <span class="title">마시쩡 더머겅</span>
       </a>
     </h1>
