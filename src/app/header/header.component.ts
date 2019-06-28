@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-header',
   template: `
+<<<<<<< HEAD
   <div class="header">
     <h1 class="logo">
       <a href="#">
