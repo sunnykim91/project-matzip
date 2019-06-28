@@ -1,6 +1,7 @@
 import {
   Component, OnInit,
   ElementRef,
+
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import loadjs from 'loadjs';
@@ -22,8 +23,10 @@ import { matzipList } from '../matzip-data'
        height: 700px;
        margin: 0 auto;
      }
+    
   `]
 })
+
 export class MainComponent implements OnInit {
   matzipList: Matzips[];
   areaList: Matzips[];
@@ -42,17 +45,19 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     loadjs('//dapi.kakao.com/v2/maps/sdk.js?appkey=06baf7c70082539cba96fe0b9ca385c9&libraries=services', this.handleMap)
+    
   }
 
-  changeArea(area: string){
+
+  changeArea(area: string) {
     this.area = area;
     this.areaList = matzipList.filter(matzip => matzip.address.includes(this.area));
     this.setMarker(this.map, this.imageSrc, this.areaList);
   }
 
-   handleMap = () => {
+  handleMap = () => {
     this.daum = window['daum']
-    
+  
     const options = {
       center: new (window as any).daum.maps.LatLng(33.450701, 126.570667),
       level: 3
@@ -124,30 +129,30 @@ export class MainComponent implements OnInit {
                         </div>
                     </div>
               `,
-              removable: true
+            removable: true
           });
- 
+
           (window as any).daum.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
- 
+
           // (window as any).daum.maps.event.addListener(marker, 'click', function () {
- 
+
           //   markerImage = new (window as any).daum.maps.MarkerImage(clickImageSrc, imageSize);
           //   marker.setImage(markerImage);
- 
+
           // });
- 
+
           function makeOverListener(map, marker, infowindow) {
-              return function () {
-                infowindow.open(map, marker);
-              };
+            return function () {
+              infowindow.open(map, marker);
+            };
           }
           this.areaMarkers.push(marker);
 
         }
       }.bind(this));
-      
+
     }
-    
+
   }
 
   highOpacity() {
