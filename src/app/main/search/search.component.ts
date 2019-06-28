@@ -12,17 +12,30 @@ import { matzipList } from '../../matzip-data'
       (keyup.enter)="changeArea(input)" #input>
     </label>
 
+    <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
+      <img *ngIf="matzip.completed; else completed"
+      src="../../assets/img/completemarker.png" class="marker">
+      <ng-template #completed>
+        <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" class="marker">
+      </ng-template>
     <ng-container *ngIf="areaList">
       <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
+
       <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
-       <img class="completed" src="../../../assets/img/completedimage.png">        
+        <img class="completed" src="../../../assets/img/completedimage.png">
         <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
         <span class="matzipInfo">{{ matzip.menu }}</span>
         <span class="matzipInfo">{{ matzip.address }}</span>
       </div>
     </ng-container>
+
     <ng-container *ngIf="broadcastList">
       <div class="matzipList" *ngFor="let matzip of matzipList | broadfilter : broadcast">
+<img *ngIf="matzip.completed; else completed"
+      src="../../assets/img/completemarker.png" class="marker">
+      <ng-template #completed>
+        <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" class="marker">
+      </ng-template>
         <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
         <img class="completed" src="../../../assets/img/completedimage.png">
         <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
@@ -62,11 +75,21 @@ import { matzipList } from '../../matzip-data'
     margin-top: 20px;
     border-bottom: 1px solid grey;
     padding: 0 10px 15px 10px;
+    position: relative;
   }
   .matzipInfo{
     display: block;
     font-size: 13px;
   }
+
+  .marker{
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width:35px;
+    height: 50px;
+  }
+
   .completed{
     width: 10%;
     height:10%;
@@ -75,6 +98,7 @@ import { matzipList } from '../../matzip-data'
     width: 10%;
     height:10%;
     padding-right: 3%;
+
   }
   `]
 })
