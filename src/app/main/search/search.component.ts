@@ -11,17 +11,14 @@ import { matzipList } from '../../matzip-data'
       <input type="text" class="area-search" placeholder=" ex) 서울" 
       (keyup.enter)="changeArea(input)" #input>
     </label>
-
-    <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
-      <img *ngIf="matzip.completed; else completed"
-      src="../../assets/img/completemarker.png" class="marker">
-      <ng-template #completed>
-        <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" class="marker">
-      </ng-template>
     <ng-container *ngIf="areaList">
       <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
-
-      <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
+        <img *ngIf="matzip.completed; else completed"
+        src="../../assets/img/completemarker.png" class="marker">
+        <ng-template #completed>
+        <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" class="marker">
+        </ng-template>
+        <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
         <img class="completed" src="../../../assets/img/completedimage.png">
         <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
         <span class="matzipInfo">{{ matzip.menu }}</span>
@@ -31,11 +28,11 @@ import { matzipList } from '../../matzip-data'
 
     <ng-container *ngIf="broadcastList">
       <div class="matzipList" *ngFor="let matzip of matzipList | broadfilter : broadcast">
-<img *ngIf="matzip.completed; else completed"
-      src="../../assets/img/completemarker.png" class="marker">
-      <ng-template #completed>
+        <img *ngIf="matzip.completed; else completed"
+        src="../../assets/img/completemarker.png" class="marker">
+        <ng-template #completed>
         <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" class="marker">
-      </ng-template>
+        </ng-template>
         <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
         <img class="completed" src="../../../assets/img/completedimage.png">
         <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
@@ -110,7 +107,6 @@ export class SearchComponent implements OnInit {
   @Input() broadcastList: Matzips[];
   @Input() areaList: Matzips[];
   @Input() broadcast: string;
-  area = '';
   stateheartSrc: String;
   state = 'beforeheart';
   heartFlag = false;
