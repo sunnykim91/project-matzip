@@ -49,7 +49,7 @@ export class NavComponent implements OnInit {
   @Output() changeM = new EventEmitter();
   @Output() filterBroad = new EventEmitter();
 
-  navItems: navItems[] = ['All', '영자로드', '수요미식회', '맛있는 녀석들', '백종원의 삼대천왕']
+  navItems: navItems[] = ['All', '영자로드', '수요미식회', '맛있는녀석들', '백종원의3대천왕']
 
   constructor() { }
 

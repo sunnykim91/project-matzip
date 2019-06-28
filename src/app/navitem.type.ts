@@ -1,1 +1,1 @@
-export type navItems = "All" | "수요미식회" | "백종원의 삼대천왕" | "영자로드" | "맛있는 녀석들"
+export type navItems = "All" | "수요미식회" | "백종원의3대천왕" | "영자로드" | "맛있는녀석들"
