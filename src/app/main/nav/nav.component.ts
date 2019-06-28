@@ -1,9 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { navItems } from 'src/app/navitem.type';
+import { matzipList } from 'src/app/matzip-data';
+import { Matzips } from 'src/app/matzips.interface';
+
 
 @Component({
   selector: 'app-nav',
   template: `
+
  <div class="nav-container" [class.active]="navStatus">
    <ul class="nav">
      <li *ngFor="let navItem of navItems" class="navList"><button (mouseover)="changeOpacity.emit()" (mouseleave)="changeOpacity.emit()">{{navItem}}</button></li>
@@ -41,7 +45,10 @@ import { navItems } from 'src/app/navitem.type';
 })
 export class NavComponent implements OnInit {
   @Input() navStatus: boolean;
+  @Input() matzipList: Matzips[];
   @Output() changeOpacity = new EventEmitter();
+  @Output() changeM = new EventEmitter();
+  @Output() filterBroad = new EventEmitter();
 
   navItems: navItems[] = ['All', '영자로드', '수요미식회', '맛있는 녀석들', '백종원의 삼대천왕']
 

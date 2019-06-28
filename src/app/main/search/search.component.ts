@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 import { Matzips } from '../../matzips.interface'
 import { matzipList } from '../../matzip-data'
@@ -11,14 +11,26 @@ import { matzipList } from '../../matzip-data'
       <input type="text" class="area-search" placeholder=" ex) 서울" 
       (keyup.enter)="changeArea(input)" #input>
     </label>
-    <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
+
+    <ng-container *ngIf="areaList">
+      <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
       <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
-      <img class="completed" src="../../../assets/img/completedimage.png">
-      <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
-      <span class="matzipInfo">{{ matzip.menu }}</span>
-      <span class="matzipInfo">{{ matzip.address }}</span>
-      
-    </div>
+       <img class="completed" src="../../../assets/img/completedimage.png">        
+        <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
+        <span class="matzipInfo">{{ matzip.menu }}</span>
+        <span class="matzipInfo">{{ matzip.address }}</span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="broadcastList">
+      <div class="matzipList" *ngFor="let matzip of matzipList | broadfilter : broadcast">
+        <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
+        <img class="completed" src="../../../assets/img/completedimage.png">
+        <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
+        <span class="matzipInfo">{{ matzip.menu }}</span>
+        <span class="matzipInfo">{{ matzip.address }}</span>
+      </div>
+    </ng-container>
+
   </div>
   `,
   styles: [`
@@ -69,10 +81,16 @@ import { matzipList } from '../../matzip-data'
 export class SearchComponent implements OnInit {
   matzipList: Matzips[] = matzipList;
   @Output() change = new EventEmitter();
+
+  @Input() area: string;
+  @Input() broadcastList: Matzips[];
+  @Input() areaList: Matzips[];
+  @Input() broadcast: string;
   area = '';
   stateheartSrc: String;
   state = 'beforeheart';
   heartFlag = false;
+
 
   constructor() { 
 
@@ -85,10 +103,13 @@ export class SearchComponent implements OnInit {
     this.stateheartSrc = `../../../assets/img/afterheart.png`
   }
   
-  changeArea(input: HTMLInputElement){
-    this.area = input.value;
-    this.change.emit(this.area);
-    input.value = '';
+
+  changeArea(area: HTMLInputElement){
+    if(area.value !== '') {
+      this.change.emit(area.value);
+      area.value = '';
+    }
+
   }
 
 }
