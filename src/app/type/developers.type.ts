@@ -1,0 +1,1 @@
+export type developersList = "김선휘" | "황유순" | "윤해서" | "유진혁"

@@ -1,8 +1,7 @@
 import {
-  Component, OnInit, Input,
+  Component, OnInit,
   ElementRef,
-  ViewChild,
-  AfterViewInit,
+
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import loadjs from 'loadjs';
@@ -14,26 +13,33 @@ import { matzipList } from '../matzip-data'
 @Component({
   selector: 'app-main',
   template: `
-    <div id="map">{{container}}</div>
-    <app-nav></app-nav>
-    <app-search></app-search>
+    <div id="map"></div>
+    <app-nav [navStatus]="navStatus" (changeOpacity)="highOpacity()"></app-nav>
+    <app-search (change)="changeArea($event)"></app-search>
   `,
   styles: [`
   #map {
-       width: 1000px;
-       height: 600px;
+       width: 1500px;
+       height: 700px;
+       margin: 0 auto;
      }
     
   `]
 })
-export class MainComponent implements OnInit, AfterViewInit {
 
-  matzipList: Matzips[] = matzipList;
-  container: any;
+export class MainComponent implements OnInit {
+  matzipList: Matzips[];
+  areaList: Matzips[];
+  broadcastList: Matzips[];
+  area = '';
+  broadcast = '';
   daum: any
   geocoder: any;
-  
-  @ViewChild('close', {static: true}) closeInfo: ElementRef;
+  map: any;
+  imageSrc: any;
+
+  areaMarkers = [];
+  navStatus: boolean = false;
 
   constructor(private http: HttpClient, private el: ElementRef) { }
 
@@ -42,34 +48,43 @@ export class MainComponent implements OnInit, AfterViewInit {
     
   }
 
-  ngAfterViewInit(): void {
-    console.log(this.closeInfo);
-    
+
+  changeArea(area: string){
+    this.area = area;
+    this.areaList = matzipList.filter(matzip => matzip.address.includes(this.area));
+    this.setMarker(this.map, this.imageSrc, this.areaList);
   }
 
-  handleMap = () => {
+   handleMap = () => {
     this.daum = window['daum']
     const options = {
       center: new (window as any).daum.maps.LatLng(33.450701, 126.570667),
       level: 3
     };
-    const map = new (window as any).daum.maps.Map(this.el.nativeElement.firstChild, options);
+    this.map = new (window as any).daum.maps.Map(this.el.nativeElement.firstChild, options);
 
-    var markerPosition = new (window as any).daum.maps.LatLng(33.450701, 126.570667);
+    let markerPosition = new (window as any).daum.maps.LatLng(33.450701, 126.570667);
 
     // 마커를 생성합니다
-    var marker = new (window as any).daum.maps.Marker({
+    let marker = new (window as any).daum.maps.Marker({
       position: markerPosition
     });
 
     // 마커가 지도 위에 표시되도록 설정합니다
-    marker.setMap(map);
-
+    marker.setMap(this.map);
 
     this.geocoder = new (window as any).daum.maps.services.Geocoder();
-    let imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-    let clickImageSrc = "../../assets/img/completemarker.png"
+     let clickImageSrc = "../../assets/img/completemarker.png";
 
+    this.imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    this.areaList = matzipList.filter(matzip => matzip.address.includes(this.area));
+    this.setMarker(this.map, this.imageSrc, this.areaList);
+  }
+
+  setMarker(map, imageSrc, matzipList){     
+    for (var i = 0; i < this.areaMarkers.length; i++) {
+      this.areaMarkers[i].setMap(null);
+    }  
     for (let i = 0, len = matzipList.length; i < len; i++) {
 
       this.geocoder.addressSearch(matzipList[i].address, function (result, status) {
@@ -124,19 +139,22 @@ export class MainComponent implements OnInit, AfterViewInit {
                 infowindow.open(map, marker);
               };
           }
-            
-          function closeOverlay() {
-            
-              // infowindow.close();
-          }
-
+          this.areaMarkers.push(marker);
         
         }
 
         
 
-      });
+      }.bind(this));
+          
+
+        }
+        
+      }
       
-    }
+    
+
+  highOpacity() {
+    this.navStatus = !this.navStatus;
   }
 }
