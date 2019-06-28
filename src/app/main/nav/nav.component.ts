@@ -10,7 +10,9 @@ import { Matzips } from 'src/app/matzips.interface';
 
  <div class="nav-container" [class.active]="navStatus">
    <ul class="nav">
-     <li *ngFor="let navItem of navItems" class="navList"><button (mouseover)="changeOpacity.emit()" (mouseleave)="changeOpacity.emit()">{{navItem}}</button></li>
+     <li *ngFor="let navItem of navItems" class="navList">
+     <button (mouseover)="changeOpacity.emit()" (mouseleave)="changeOpacity.emit()">{{navItem}}</button>
+     </li>
    </ul>
  </div>
  `,
