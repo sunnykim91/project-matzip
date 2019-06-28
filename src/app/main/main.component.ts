@@ -13,8 +13,8 @@ import { matzipList } from '../matzip-data'
   selector: 'app-main',
   template: `
     <div id="map"></div>
-    <app-nav [navStatus]="navStatus" (changeOpacity)="highOpacity()"></app-nav>
-    <app-search (change)="changeArea($event)"></app-search>
+    <app-nav [matzipList]="matzipList" [navStatus]="navStatus" (changeOpacity)="highOpacity()" (filterBroad)="filteredBroadcast($event)"></app-nav>
+    <app-search (change)="changeArea($event)" [area]="area" [broadcastList]="broadcastList" [areaList]="areaList" [broadcast]="broadcast"></app-search>
   `,
   styles: [`
   #map {
@@ -26,8 +26,8 @@ import { matzipList } from '../matzip-data'
 })
 export class MainComponent implements OnInit {
   matzipList: Matzips[];
-  areaList: Matzips[];
-  broadcastList: Matzips[];
+  areaList: Matzips[] = null;
+  broadcastList: Matzips[] = null;
   area = '';
   broadcast = '';
   daum: any
@@ -48,6 +48,14 @@ export class MainComponent implements OnInit {
     this.area = area;
     this.areaList = matzipList.filter(matzip => matzip.address.includes(this.area));
     this.setMarker(this.map, this.imageSrc, this.areaList);
+    this.broadcastList = null;
+  }
+
+  filteredBroadcast(broadcast: string) {
+    this.broadcast = broadcast;
+    this.broadcastList = matzipList.filter(matzip => matzip.broadcastingname.includes(this.broadcast));
+    this.setMarker(this.map, this.imageSrc, this.broadcastList);
+    this.areaList = null;
   }
 
    handleMap = () => {

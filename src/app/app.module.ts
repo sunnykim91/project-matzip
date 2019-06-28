@@ -13,6 +13,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { MatzipfilterPipe } from './matzipfilter.pipe';
 import { FormsModule } from '@angular/forms';
+import { BroadfilterPipe } from './broadfilter.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     SearchComponent,
     DialogComponent,
     FooterComponent,
-    MatzipfilterPipe
+    MatzipfilterPipe,
+    BroadfilterPipe
   ],
   imports: [
     BrowserModule,

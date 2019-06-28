@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 import { Matzips } from '../../matzips.interface'
 import { matzipList } from '../../matzip-data'
@@ -9,13 +9,22 @@ import { matzipList } from '../../matzip-data'
   <div class="overlay">
     <label>지역별 검색 : 
       <input type="text" class="area-search" placeholder=" ex) 서울" 
-      (keyup.enter)="changeArea(input.value)" #input>
+      (keyup.enter)="changeArea(input)" #input>
     </label>
-    <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
-      <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
-      <span class="matzipInfo">{{ matzip.menu }}</span>
-      <span class="matzipInfo">{{ matzip.address }}</span>
-    </div>
+    <ng-container *ngIf="areaList">
+      <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
+        <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
+        <span class="matzipInfo">{{ matzip.menu }}</span>
+        <span class="matzipInfo">{{ matzip.address }}</span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="broadcastList">
+      <div class="matzipList" *ngFor="let matzip of matzipList | broadfilter : broadcast">
+        <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
+        <span class="matzipInfo">{{ matzip.menu }}</span>
+        <span class="matzipInfo">{{ matzip.address }}</span>
+      </div>
+    </ng-container>
   </div>
   `,
   styles: [`
@@ -57,17 +66,22 @@ import { matzipList } from '../../matzip-data'
 export class SearchComponent implements OnInit {
   matzipList: Matzips[] = matzipList;
   @Output() change = new EventEmitter();
-  area = '';
-
+  @Input() area: string;
+  @Input() broadcastList: Matzips[];
+  @Input() areaList: Matzips[];
+  @Input() broadcast: string;
+  
   constructor() { 
   }
 
   ngOnInit() {
   }
   
-  changeArea(area: string){
-    this.area = area;
-    this.change.emit(area);
+  changeArea(area: HTMLInputElement){
+    if(area.value !== '') {
+      this.change.emit(area.value);
+      area.value = '';
+    }
   }
 
 }
