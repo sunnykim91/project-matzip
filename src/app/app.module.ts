@@ -11,6 +11,8 @@ import { NavComponent } from './main/nav/nav.component';
 import { SearchComponent } from './main/search/search.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { FooterComponent } from './footer/footer.component';
+import { MatzipfilterPipe } from './matzipfilter.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,14 @@ import { FooterComponent } from './footer/footer.component';
     NavComponent,
     SearchComponent,
     DialogComponent,
-    FooterComponent
+    FooterComponent,
+    MatzipfilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
