@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import { Component, OnInit } from '@angular/core';
-import { navitem } from 'src/app/type/navitem.type';
-=======
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { navItems } from 'src/app/navitem.type';
->>>>>>> feature
 
 @Component({
   selector: 'app-nav',

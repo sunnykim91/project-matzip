@@ -9,7 +9,7 @@ import { matzipList } from '../../matzip-data'
   <div class="overlay">
     <label>지역별 검색 : 
       <input type="text" class="area-search" placeholder=" ex) 서울" 
-      (keyup.enter)="changeArea(input.value)" #input>
+      (keyup.enter)="changeArea(input)" #input>
     </label>
     <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
       <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
@@ -65,9 +65,10 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
   }
   
-  changeArea(area: string){
-    this.area = area;
-    this.change.emit(area);
+  changeArea(input: HTMLInputElement){
+    this.area = input.value;
+    this.change.emit(this.area);
+    input.value = '';
   }
 
 }
