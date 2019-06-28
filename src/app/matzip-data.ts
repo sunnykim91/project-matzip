@@ -9,7 +9,7 @@ export const matzipList: Matzips[] =
     "name": "모닥식탁",
     "menu": "카레",
     "address": "제주도 제주시 조천읍 함덕리 998-1",
-    "completed": false,
+    "completed": true,
     "wishable": false
   },
   {
