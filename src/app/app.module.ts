@@ -9,7 +9,6 @@ import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { NavComponent } from './main/nav/nav.component';
 import { SearchComponent } from './main/search/search.component';
-import { MapComponent } from './main/map/map.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { MatzipfilterPipe } from './matzipfilter.pipe';
@@ -23,7 +22,6 @@ import { FormsModule } from '@angular/forms';
     MainComponent,
     NavComponent,
     SearchComponent,
-    MapComponent,
     DialogComponent,
     FooterComponent,
     MatzipfilterPipe
