@@ -68,6 +68,7 @@ import { matzipList } from '../../matzip-data'
     left: 15px;
     width:35px;
     height: 50px;
+  }
 
   .completed{
     width: 10%;
