@@ -11,11 +11,10 @@ import { matzipList } from '../../matzip-data'
       <input type="text" class="area-search" placeholder=" ex) 서울" 
       (keyup.enter)="changeArea(input)" #input>
     </label>
-
     <ng-container *ngIf="areaList">
       <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
-      <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
-       <img class="completed" src="../../../assets/img/completedimage.png">        
+        <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
+        <img class="completed" src="../../../assets/img/completedimage.png">        
         <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
         <span class="matzipInfo">{{ matzip.menu }}</span>
         <span class="matzipInfo">{{ matzip.address }}</span>
@@ -86,7 +85,6 @@ export class SearchComponent implements OnInit {
   @Input() broadcastList: Matzips[];
   @Input() areaList: Matzips[];
   @Input() broadcast: string;
-  area = '';
   stateheartSrc: String;
   state = 'beforeheart';
   heartFlag = false;
