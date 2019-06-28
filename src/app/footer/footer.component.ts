@@ -4,7 +4,6 @@ import { developersList } from '../type/developers.type';
 @Component({
   selector: 'app-footer',
   template: `
-<<<<<<< HEAD
   <div class="footer">
     <ul class="develop-list">
       <li *ngFor="let developer of developers" class="develop">{{developer}}</li>
