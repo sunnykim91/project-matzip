@@ -27,12 +27,12 @@ import { matzipList } from '../../matzip-data'
     </div>
     </ng-container>
     <ng-container *ngIf="broadcastList">
-    <div class="matzipList" *ngFor="let matzip of matzipList | broadfilter : broadcast">
-  <img *ngIf="matzip.completed; else completed"
-      src="../../assets/img/completemarker.png" class="marker">
-      <ng-template #completed>
+      <div class="matzipList" *ngFor="let matzip of matzipList | broadfilter : broadcast">
+        <img *ngIf="matzip.completed; else completed"
+        src="../../assets/img/completemarker.png" class="marker">
+        <ng-template #completed>
         <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" class="marker">
-      </ng-template>
+        </ng-template>
         <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
         <img class="completed" src="../../../assets/img/completedimage.png"
         (click)="checkMatzip(matzip.completed)">
@@ -109,7 +109,7 @@ export class SearchComponent implements OnInit {
   @Input() broadcastList: Matzips[];
   @Input() areaList: Matzips[];
   @Input() broadcast: string;
-  
+
   stateheartSrc: String;
   state = 'beforeheart';
   heartFlag = false;
