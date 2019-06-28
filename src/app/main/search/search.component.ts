@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { Matzips } from '../../matzips.interface'
 import { matzipList } from '../../matzip-data'
@@ -56,8 +56,9 @@ import { matzipList } from '../../matzip-data'
 })
 export class SearchComponent implements OnInit {
   matzipList: Matzips[] = matzipList;
-
+  @Output() change = new EventEmitter();
   area = '';
+
   constructor() { 
   }
 
@@ -66,6 +67,7 @@ export class SearchComponent implements OnInit {
   
   changeArea(area: string){
     this.area = area;
+    this.change.emit(area);
   }
 
 }
