@@ -8,7 +8,7 @@ export class BroadfilterPipe implements PipeTransform {
 
   transform(matzipList: Matzips[], broadcast: string): Matzips[] {
     return matzipList.filter(matzip => {
-      if (matzip.broadcastingname.includes(broadcast)) return matzip;
+      if (matzip.broadcastingname.includes( broadcast !== 'All' ? broadcast : '')) return matzip;
       else return false;
     });
   }
