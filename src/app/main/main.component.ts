@@ -67,6 +67,12 @@ export class MainComponent implements OnInit {
     this.map = new (window as any).daum.maps.Map(this.el.nativeElement.firstChild, options);
 
     let markerPosition = new (window as any).daum.maps.LatLng(33.450701, 126.570667);
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      let latitude = pos.coords.latitude;
+      let longitude = pos.coords.longitude;
+      let markerPosition = new (window as any).daum.maps.LatLng(latitude, longitude);
+      this.map.setCenter(markerPosition);
+    });
 
     // 마커를 생성합니다
     let marker = new (window as any).daum.maps.Marker({
@@ -106,10 +112,43 @@ export class MainComponent implements OnInit {
             title: matzipList[i].name,
             image: markerImage
           });
+          let infowindow = new (window as any).daum.maps.InfoWindow({
+            content: `
+                      <div class="wrap">
+                        <div class="info">
+                            <div class="title">
+                                ${matzipList[i].name}
+                                <div class="close" onclick="closeOverlay()" title="닫기"></div>
+                            </div>
+                            <div class="body">
+                                <div class="desc">
+                                    <div class="ellipsis">${matzipList[i].address}</div>
+                                    <a href="https://map.kakao.com/link/to/${matzipList[i].name},${result[0].y},${result[0].x}" style="color:blue" target="_blank">길찾기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+              `,
+              removable: true
+          });
+ 
+          (window as any).daum.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+ 
+          // (window as any).daum.maps.event.addListener(marker, 'click', function () {
+ 
+          //   markerImage = new (window as any).daum.maps.MarkerImage(clickImageSrc, imageSize);
+          //   marker.setImage(markerImage);
+ 
+          // });
+ 
+          function makeOverListener(map, marker, infowindow) {
+              return function () {
+                infowindow.open(map, marker);
+              };
+          }
           this.areaMarkers.push(marker);
 
         }
-        
       }.bind(this));
       
     }

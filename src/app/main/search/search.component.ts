@@ -77,11 +77,13 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
   }
   
+
   changeArea(area: HTMLInputElement){
     if(area.value !== '') {
       this.change.emit(area.value);
       area.value = '';
     }
+
   }
 
 }
