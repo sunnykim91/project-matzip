@@ -93,7 +93,6 @@ export class MainComponent implements OnInit {
         if (status === (window as any).daum.maps.services.Status.OK) {
 
           let coords = new (window as any).daum.maps.LatLng(result[0].y, result[0].x);
-          let onflag = true;
           // 결과값으로 받은 위치를 마커로 표시합니다
           let imageSize = new (window as any).daum.maps.Size(24, 35);
 
@@ -122,7 +121,7 @@ export class MainComponent implements OnInit {
                             </div>  
                         </div>     
                     </div>
-              `
+              `, removable:true
           });
 
           (window as any).daum.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
@@ -139,6 +138,7 @@ export class MainComponent implements OnInit {
                 infowindow.open(map, marker);
               };
           }
+
           this.areaMarkers.push(marker);
         
         }

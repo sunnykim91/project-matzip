@@ -1,44 +1,43 @@
-
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { navItems } from 'src/app/navitem.type';
 
 @Component({
   selector: 'app-nav',
   template: `
-  <div class="nav-container" [class.active]="navStatus">
-    <ul class="nav">
-      <li *ngFor="let navItem of navItems" class="navList"><button (mouseover)="changeOpacity.emit()" (mouseleave)="changeOpacity.emit()">{{navItem}}</button></li>
-    </ul>
-  </div>
-  `,
+ <div class="nav-container" [class.active]="navStatus">
+   <ul class="nav">
+     <li *ngFor="let navItem of navItems" class="navList"><button (mouseover)="changeOpacity.emit()" (mouseleave)="changeOpacity.emit()">{{navItem}}</button></li>
+   </ul>
+ </div>
+ `,
   styles: [`
-    .nav-container {
-      position: absolute;
-      background: yellowgreen;
-      opacity: 0.5;
-      top: 159px;
-      z-index: 1;
-      border-radius: 20px;
-      margin-left: 20%;
-    }
-    .nav-container.active {
-      opacity: 1;
-    }
-    .navList {
-      display: inline-block;
-      list-style-type: none;
-      cursor: pointer;
-      margin-right: 40px;
-    }
-    .navList button {
-      height: 50px;
-      width: 150px;
-      font-size: 15px;
-      font-family: 'Binggrae-Bold';
-      border: none;
-      border-radius: 20px;
-    }
-  `]
+   .nav-container {
+     position: absolute;
+     background: yellowgreen;
+     opacity: 0.5;
+     top: 159px;
+     z-index: 1;
+     border-radius: 20px;
+     margin-left: 20%;
+   }
+   .nav-container.active {
+     opacity: 1;
+   }
+   .navList {
+     display: inline-block;
+     list-style-type: none;
+     cursor: pointer;
+     margin-right: 40px;
+   }
+   .navList button {
+     height: 50px;
+     width: 150px;
+     font-size: 15px;
+     font-family: 'Binggrae-Bold';
+     border: none;
+     border-radius: 20px;
+   }
+ `]
 })
 export class NavComponent implements OnInit {
   @Input() navStatus: boolean;
