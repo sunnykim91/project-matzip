@@ -13,13 +13,14 @@ import { matzipList } from '../matzip-data'
   selector: 'app-main',
   template: `
     <div id="map"></div>
-    <app-nav></app-nav>
+    <app-nav [navStatus]="navStatus" (changeOpacity)="highOpacity()"></app-nav>
     <app-search (change)="changeArea($event)"></app-search>
   `,
   styles: [`
   #map {
-       width: 1000px;
-       height: 600px;
+       width: 1500px;
+       height: 700px;
+       margin: 0 auto;
      }
   `]
 })
@@ -35,6 +36,7 @@ export class MainComponent implements OnInit {
   imageSrc: any;
 
   areaMarkers = [];
+  navStatus: boolean = false;
 
   constructor(private http: HttpClient, private el: ElementRef) { }
 
@@ -105,5 +107,8 @@ export class MainComponent implements OnInit {
     }
     
   }
-  
+
+  highOpacity() {
+    this.navStatus = !this.navStatus;
+  }
 }
