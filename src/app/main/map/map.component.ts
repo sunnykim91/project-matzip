@@ -16,6 +16,7 @@ import {
      #map {
        width: 1000px;
        height: 600px;
+       margin: 0 auto;
      }
   `]
 })
