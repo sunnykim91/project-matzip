@@ -11,8 +11,11 @@ import { matzipList } from '../../matzip-data'
       <input type="text" class="area-search" placeholder=" ex) 서울" 
       (keyup.enter)="changeArea(input)" #input>
     </label>
+
     <ng-container *ngIf="areaList">
       <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
+      <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
+       <img class="completed" src="../../../assets/img/completedimage.png">        
         <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
         <span class="matzipInfo">{{ matzip.menu }}</span>
         <span class="matzipInfo">{{ matzip.address }}</span>
@@ -20,11 +23,14 @@ import { matzipList } from '../../matzip-data'
     </ng-container>
     <ng-container *ngIf="broadcastList">
       <div class="matzipList" *ngFor="let matzip of matzipList | broadfilter : broadcast">
+        <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
+        <img class="completed" src="../../../assets/img/completedimage.png">
         <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
         <span class="matzipInfo">{{ matzip.menu }}</span>
         <span class="matzipInfo">{{ matzip.address }}</span>
       </div>
     </ng-container>
+
   </div>
   `,
   styles: [`
@@ -61,20 +67,40 @@ import { matzipList } from '../../matzip-data'
     display: block;
     font-size: 13px;
   }
+  .completed{
+    width: 10%;
+    height:10%;
+  }
+  .heart{
+    width: 10%;
+    height:10%;
+    padding-right: 3%;
+  }
   `]
 })
 export class SearchComponent implements OnInit {
   matzipList: Matzips[] = matzipList;
   @Output() change = new EventEmitter();
+
   @Input() area: string;
   @Input() broadcastList: Matzips[];
   @Input() areaList: Matzips[];
   @Input() broadcast: string;
-  
+  area = '';
+  stateheartSrc: String;
+  state = 'beforeheart';
+  heartFlag = false;
+
+
   constructor() { 
+
   }
 
   ngOnInit() {
+    this.stateheartSrc = `../../../assets/img/${this.state}.png`
+  }
+  changeHeart(){
+    this.stateheartSrc = `../../../assets/img/afterheart.png`
   }
   
 

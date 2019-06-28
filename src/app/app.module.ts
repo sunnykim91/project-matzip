@@ -15,6 +15,7 @@ import { MatzipfilterPipe } from './matzipfilter.pipe';
 import { FormsModule } from '@angular/forms';
 import { BroadfilterPipe } from './broadfilter.pipe';
 
+
 @NgModule({
   declarations: [
     AppComponent,

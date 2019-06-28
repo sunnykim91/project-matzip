@@ -1,6 +1,7 @@
 import {
   Component, OnInit,
   ElementRef,
+
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import loadjs from 'loadjs';
@@ -22,8 +23,10 @@ import { matzipList } from '../matzip-data'
        height: 700px;
        margin: 0 auto;
      }
+    
   `]
 })
+
 export class MainComponent implements OnInit {
   matzipList: Matzips[];
   areaList: Matzips[] = null;
@@ -42,9 +45,11 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     loadjs('//dapi.kakao.com/v2/maps/sdk.js?appkey=06baf7c70082539cba96fe0b9ca385c9&libraries=services', this.handleMap)
+    
   }
 
-  changeArea(area: string){
+
+  changeArea(area: string) {
     this.area = area;
     this.areaList = matzipList.filter(matzip => matzip.address.includes(this.area));
     this.setMarker(this.map, this.imageSrc, this.areaList);
@@ -58,29 +63,30 @@ export class MainComponent implements OnInit {
     this.areaList = null;
   }
 
-   handleMap = () => {
+  handleMap = () => {
     this.daum = window['daum']
+
     const options = {
       center: new (window as any).daum.maps.LatLng(33.450701, 126.570667),
       level: 3
     };
     this.map = new (window as any).daum.maps.Map(this.el.nativeElement.firstChild, options);
-
-    let markerPosition = new (window as any).daum.maps.LatLng(33.450701, 126.570667);
-    navigator.geolocation.getCurrentPosition(function(pos) {
+    navigator.geolocation.getCurrentPosition(function (pos) {
       let latitude = pos.coords.latitude;
       let longitude = pos.coords.longitude;
-      let markerPosition = new (window as any).daum.maps.LatLng(latitude, longitude);
-      this.map.setCenter(markerPosition);
-    });
+      let myPos = new (window as any).daum.maps.LatLng(latitude, longitude);
+      this.map.setCenter(myPos);
+      // 마커를 생성합니다
+      let marker = new (window as any).daum.maps.Marker({
+        position: myPos
+      });
 
-    // 마커를 생성합니다
-    let marker = new (window as any).daum.maps.Marker({
-      position: markerPosition
-    });
+      // 마커가 지도 위에 표시되도록 설정합니다
+      marker.setMap(this.map);
+    }.bind(this));
+    // let markerPosition = new (window as any).daum.maps.LatLng(33.450701, 126.570667);
 
-    // 마커가 지도 위에 표시되도록 설정합니다
-    marker.setMap(this.map);
+
 
     this.geocoder = new (window as any).daum.maps.services.Geocoder();
     this.imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
@@ -88,10 +94,10 @@ export class MainComponent implements OnInit {
     this.setMarker(this.map, this.imageSrc, this.areaList);
   }
 
-  setMarker(map, imageSrc, matzipList){     
+  setMarker(map, imageSrc, matzipList) {
     for (var i = 0; i < this.areaMarkers.length; i++) {
       this.areaMarkers[i].setMap(null);
-    }  
+    }
     for (let i = 0; i < matzipList.length; i++) {
 
       this.geocoder.addressSearch(matzipList[i].address, function (result, status) {
@@ -129,30 +135,30 @@ export class MainComponent implements OnInit {
                         </div>
                     </div>
               `,
-              removable: true
+            removable: true
           });
- 
+
           (window as any).daum.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
- 
+
           // (window as any).daum.maps.event.addListener(marker, 'click', function () {
- 
+
           //   markerImage = new (window as any).daum.maps.MarkerImage(clickImageSrc, imageSize);
           //   marker.setImage(markerImage);
- 
+
           // });
- 
+
           function makeOverListener(map, marker, infowindow) {
-              return function () {
-                infowindow.open(map, marker);
-              };
+            return function () {
+              infowindow.open(map, marker);
+            };
           }
           this.areaMarkers.push(marker);
 
         }
       }.bind(this));
-      
+
     }
-    
+
   }
 
   highOpacity() {
