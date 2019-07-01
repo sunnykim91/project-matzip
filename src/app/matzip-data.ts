@@ -18,7 +18,7 @@ export const matzipList: Matzips[] =
       "name": "대치정육식당",
       "menu": "등심",
       "address": "서울 강남구 대치4동 911-8",
-      "completed": false,
+      "completed": true,
       "wishable": false
     },
     {

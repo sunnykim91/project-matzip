@@ -68,7 +68,7 @@ export class MainComponent implements OnInit {
   
     const options = {
       center: new (window as any).daum.maps.LatLng(33.450701, 126.570667),
-      level: 3
+      level: 13
     };
     this.map = new (window as any).daum.maps.Map(this.el.nativeElement.firstChild, options);
     navigator.geolocation.getCurrentPosition(function(pos) {
