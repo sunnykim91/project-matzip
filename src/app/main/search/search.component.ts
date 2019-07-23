@@ -12,15 +12,8 @@ import { matzipList } from '../../matzip-data'
       (keyup.enter)="changeArea(input)" #input>
     </label>
 
-    <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
-      <img *ngIf="matzip.completed; else completed"
-      src="../../assets/img/completemarker.png" class="marker">
-      <ng-template #completed>
-        <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" class="marker">
-      </ng-template>
     <ng-container *ngIf="areaList">
       <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
-
       <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
         <img class="completed" src="../../../assets/img/completedimage.png">
         <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
@@ -31,7 +24,7 @@ import { matzipList } from '../../matzip-data'
 
     <ng-container *ngIf="broadcastList">
       <div class="matzipList" *ngFor="let matzip of matzipList | broadfilter : broadcast">
-<img *ngIf="matzip.completed; else completed"
+      <img *ngIf="matzip.completed; else completed"
       src="../../assets/img/completemarker.png" class="marker">
       <ng-template #completed>
         <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" class="marker">
@@ -44,7 +37,7 @@ import { matzipList } from '../../matzip-data'
       </div>
     </ng-container>
 
-  </div>
+  
   `,
   styles: [`
   .overlay{
@@ -110,7 +103,6 @@ export class SearchComponent implements OnInit {
   @Input() broadcastList: Matzips[];
   @Input() areaList: Matzips[];
   @Input() broadcast: string;
-  area = '';
   stateheartSrc: String;
   state = 'beforeheart';
   heartFlag = false;

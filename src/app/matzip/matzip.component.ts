@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
     <div class="background"></div>
       <app-header></app-header>
       <app-main></app-main>
+      <app-dialog></app-dialog>
       <app-footer></app-footer>
   `,
   styles: []
