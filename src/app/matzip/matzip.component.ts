@@ -11,6 +11,7 @@ import { Component } from '@angular/core';
   `,
   styles: []
 })
-export class MatzipComponent   {
+export class MatzipComponent {
+  
 
 }

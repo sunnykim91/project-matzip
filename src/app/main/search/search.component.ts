@@ -9,28 +9,33 @@ import { matzipList } from '../../matzip-data'
   <div class="overlay">
     <label>지역별 검색 : 
       <input type="text" class="area-search" placeholder=" ex) 서울" 
-      (keyup.enter)="changeArea(input)" #input>
+      (keyup.enter)="changeArea(input)" autofocus #input>
     </label>
-
     <ng-container *ngIf="areaList">
-      <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
-      <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
-        <img class="completed" src="../../../assets/img/completedimage.png">
-        <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
-        <span class="matzipInfo">{{ matzip.menu }}</span>
-        <span class="matzipInfo">{{ matzip.address }}</span>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="broadcastList">
-      <div class="matzipList" *ngFor="let matzip of matzipList | broadfilter : broadcast">
+    <div class="matzipList" *ngFor="let matzip of matzipList | matzipfilter: area">
       <img *ngIf="matzip.completed; else completed"
       src="../../assets/img/completemarker.png" class="marker">
       <ng-template #completed>
         <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" class="marker">
       </ng-template>
+      <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
+        <img class="completed" src="../../../assets/img/completedimage.png"
+        (click)="checkMatzip(matzip.completed)">
+        <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
+        <span class="matzipInfo">{{ matzip.menu }}</span>
+        <span class="matzipInfo">{{ matzip.address }}</span>
+    </div>
+    </ng-container>
+    <ng-container *ngIf="broadcastList">
+      <div class="matzipList" *ngFor="let matzip of matzipList | broadfilter : broadcast">
+        <img *ngIf="matzip.completed; else completed"
+        src="../../assets/img/completemarker.png" class="marker">
+        <ng-template #completed>
+        <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" class="marker">
+        </ng-template>
         <img (click)="changeHeart()" class="heart" src="{{stateheartSrc}}">
-        <img class="completed" src="../../../assets/img/completedimage.png">
+        <img class="completed" src="../../../assets/img/completedimage.png"
+        (click)="checkMatzip(matzip.completed)">
         <span class="matzipInfo"><strong>{{ matzip.name }}</strong></span>
         <span class="matzipInfo">{{ matzip.menu }}</span>
         <span class="matzipInfo">{{ matzip.address }}</span>
@@ -98,6 +103,7 @@ import { matzipList } from '../../matzip-data'
 export class SearchComponent implements OnInit {
   matzipList: Matzips[] = matzipList;
   @Output() change = new EventEmitter();
+  // @Output() complete = new EventEmitter();
 
   @Input() area: string;
   @Input() broadcastList: Matzips[];
@@ -126,6 +132,10 @@ export class SearchComponent implements OnInit {
       area.value = '';
     }
 
+  }
+  checkMatzip(check: boolean) {
+    if (check) return;
+    else window.scrollTo( 0, 1000 );
   }
 
 }

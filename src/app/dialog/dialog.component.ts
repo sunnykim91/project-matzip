@@ -44,7 +44,7 @@ interface Page {
   .input-container {
     background-color: rgba(255,255,255,0.5);
     background: url("./assets/img/background.jpg") no-repeat center 100%;
-    margin: 30px 150px 20px 150px;
+    margin-top: 100px;
     background-size: 100%;
 }
 
